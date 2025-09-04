@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
 function App() {
+  const MAX_TEXT_LENGTH = 3000;
+
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,8 +25,8 @@ function App() {
   }, []);
 
   const speakText = async () => {
-    if (text.length > 3000) {
-      setError("Text must be less than 3000 characters");
+    if (text.length > MAX_TEXT_LENGTH) {
+      setError(`Text must be less than ${MAX_TEXT_LENGTH} characters`);
       return;
     }
 
@@ -87,16 +89,16 @@ function App() {
           focus:outline-none focus:ring-2 focus:ring-fuchsia-400
           transition duration-300 disabled:opacity-50 resize-none
           shadow-xl focus:shadow-fuchsia-700/70"
-          placeholder="Enter text to convert to speech... (max 3000 characters)"
+          placeholder={`Enter text to convert to speech... (max ${MAX_TEXT_LENGTH} characters)`}
           value={text}
           onChange={(e) => setText(e.target.value)}
           disabled={!aiReady}
-          maxLength={3000}
+          maxLength={MAX_TEXT_LENGTH}
         ></textarea>
 
         <div className="flex items-center justify-between mt-4">
           <span className="text-sm text-gray-400">
-            {text.length}/3000 characters
+            {text.length}/{MAX_TEXT_LENGTH} characters
           </span>
         </div>
 
